@@ -1,0 +1,316 @@
+:root {
+  --header_heigth: 50px;
+  --main_background: hsl(240, 20%, 17%);
+  --header_text_color: rgb(208, 220, 234);
+  --header_text_color_highliht: white;
+  --header_text_color_active: rgb(215, 246, 243);
+  --content_background: hsl(187, 24%, 86%);
+  --table_header_background:hsl(240, 15%, 37%);
+  --hl_color: hsl(187, 12%, 79%);
+  --element_border: 1px solid hsl(183, 13%, 71%);
+  
+}
+
+@font-face {
+  font-family: "FiraSans";
+  font-style: normal;
+  font-weight: 100;
+  src: url("../fonts/FiraSans-Thin.ttf") format("truetype");
+}
+@font-face {
+  font-family: "FiraSans";
+  font-style: normal;
+  font-weight: 300;
+  src: url("../fonts/FiraSans-Light.ttf") format("truetype");
+}
+@font-face {
+  font-family: "FiraSans";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/FiraSans-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "FiraSans";
+  font-style: normal;
+  font-weight: 500;
+  src: url("../fonts/FiraSans-Medium.ttf") format("truetype");
+}
+@font-face {
+  font-family: "FiraSans";
+  font-style: normal;
+  font-weight: 700;
+  src: url("../fonts/FiraSans-Bold.ttf") format("truetype");
+}
+@font-face {
+  font-family: "FiraSans";
+  font-style: normal;
+  font-weight: 900;
+  src: url("../fonts/FiraSans-Black.ttf") format("truetype");
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+
+html {
+  font-size: 14px;
+  font-family: "FiraSans", Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  background-color: rgb(36, 36, 55);
+}
+
+@media (max-width: 1680px) {
+  html {
+    font-size: 12px;
+  }
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(34, 34, 51);
+  color: var(--header_text_color);
+  justify-content: space-between;
+  align-items: center;
+  height: var(--header_heigth);
+  min-width: 100vw;
+  font-weight: 500;
+  font-size: 1.25rem;
+  box-shadow: 0 0 5px #000;
+}
+
+.header__row {
+  width: 100%;
+  margin: 0.5rem auto;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  list-style-type: none;
+}
+
+.header__row a {
+  text-decoration: none;
+  color: inherit;  
+}
+.header__row a:hover {
+  text-decoration: none;
+  color: var(--header_text_color_highliht);
+  align-items: baseline;
+  
+}
+
+.header__row .option_active a {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--header_text_color_active);
+  text-decoration: underline;
+}
+.header__row .timer {
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.header__row .links_block {
+  display:flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.header__row .user_block {
+  display:flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+button, input, select  {
+  font-size: 1rem;
+  font-family: "FiraSans", Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  padding: .4rem 1rem;
+  margin:.2rem;
+  border-radius: .3rem;
+  border:var(--element_border);
+  background-color: white;
+  cursor: pointer;
+
+}
+
+
+.timer {
+  margin: 0.5rem auto;
+}
+.timer button {
+  font-family: "FiraSans", Arial, Helvetica, sans-serif;
+  font-size: 1.1rem;
+  background-color: #e0e0f8;
+  border-radius: 1px;
+  margin: 0 0.2rem;
+  padding: 0 0.35rem;
+  height: 25px;
+  min-width: 2rem;
+  border: 0;
+}
+.timer button:hover:enabled {
+  opacity: 0.9;
+}
+.timer input {
+  font-family: "FiraSans", Arial, Helvetica, sans-serif;
+  height: 25px;
+  width: 140px;
+  font-size: 1.25rem;
+  background-color: #e0e0f8;
+  border-radius: 2px;
+}
+
+.content {
+  max-width: 1280px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  line-height: 1.3rem;
+  font-weight: 400;
+  height: 100vh;
+  padding-top: var(--header_heigth);
+  margin: auto;
+  overflow-y: none;
+}
+
+.content__window {
+  background-color: var(--content_background);
+  height: 100%;
+  width: 100%;
+  border-right: 1px solid #222;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.content__window .title {
+  margin: 1rem;
+  text-align: center;
+  font-weight: 500;
+  font-size: 1.5rem;
+}
+
+
+.content__window .table {
+  overflow-y: auto;
+}
+
+
+.list_row {
+  display: flex;
+  gap: 2rem;
+  justify-content: space-between;
+  align-items:baseline;
+  min-height: 2.5rem;
+  padding: .6rem .6rem .2rem .6rem;
+}
+
+
+.button_block {
+  display: flex;
+  justify-content: space-evenly;
+  gap:.5rem;
+}
+
+.section_colors {
+  background: var(--table_header_background);
+  color: var(--header_text_color);
+}
+
+.section_title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+  display: inline-block;
+  width: 100%;
+}
+
+.section_header {
+  font-weight: 500;
+}
+
+table {
+  /* border: 1px solid black; */
+  flex-shrink: 0;
+  overflow-y: auto;
+  border-collapse: collapse;
+  min-width: 360px;
+  margin: 1rem auto;
+  border: 1px solid rgba(83, 73, 73, 0.4);
+  line-height: 1.3em;
+}
+table th {
+  background-color: rgb(62, 74, 76);
+  color: rgb(238, 247, 244);
+  font-weight: 500;
+  padding: 0.5em 1em;
+}
+table tr {
+  border-bottom: 1px solid rgba(83, 73, 73, 0.4);
+  background-color: rgb(220, 228, 223);
+}
+table tr:nth-child(even) {
+  background-color: rgb(228, 234, 229);
+}
+table tr:hover {
+  background-color: rgb(227, 241, 232);
+}
+table tr.not_active {
+  color: #999;
+}
+table tr span:hover {
+  text-decoration: underline;
+}
+
+table td {
+  padding: 0.5em 1em;
+  text-align: center;
+  min-width: 5rem;
+}/*# sourceMappingURL=main.css.map */
+
+.row-button {
+  background-color: hsl(183, 15%, 73%);
+  /* border: 1px solid  hsl(183, 13%, 71%); */
+  border: var(--element_border);
+}
+.row-button:hover {
+  background-color: hsl(183, 19%, 77%);
+}
+.row-button:active {
+  background-color: rgb(201, 223, 224);
+}
+
+
+
+.row_content {
+  min-height: 2.5rem;
+  padding: .6rem .6rem .2rem .6rem;
+  border-bottom: var(--element_border);
+}
+
+.row_grid_2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.row_grid_3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.row_content input, .row_content select  {
+  width: 100%;
+  min-height: 2.5rem;
+}

@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Экспертиза интересных материалов</h1>
+    {% for item in listik %}
+        <div>{{item}} материал</div>
+    {% endfor %}
+{% endblock content %}

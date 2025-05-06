@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %} 
+<h2>Детали лаборатории</h2>
+<span style="margin-top:20px;">Лаборатория: {{object.name}}</span>
+
+ {% for expert in object.experts.all %}
+<div>{{ expert.last_name }} {{ expert.first_name }}</div>
+{%endfor%}
+-----------
+
+ {% for area in object.expertiseareas.all %}
+<div>{{ area.name }}</div>
+{%endfor%}
+
+{% endblock content %}

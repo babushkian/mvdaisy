@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+    <div>    
+        <div class="list_row section_title section_colors">Личные данные:</div>
+        <div class="row_content row_grid_2">
+            <div>ФИО</div><div>{{ expert.fio }}</div>
+        </div>
+        <div class="row_content row_grid_2">
+            <div>Пол</div><div>{{expert.sex}}</div>
+        </div>
+            <div class="row_content row_grid_2">
+            <div>Звание</div><div>{{expert.rank}}</div>
+        </div>
+            <div class="row_content row_grid_2">
+            <div>Должность</div><div>{{expert.position}}</div>
+        </div>        
+    </div>    
+
+    {% include 'expert/expert_detail_section.html' with data=laboratories %}    
+    {% include 'expert/expert_detail_section.html' with data=permissions %}
+
+
+
+
+{% endblock content %}

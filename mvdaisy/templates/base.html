@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        {% load static %}
+        <script src="{% static '/js/test.js' %}"></script>
+        <link
+        rel="stylesheet"
+        type="text/css"
+        href="{% static '/css/style.css' %}"
+        />
+        <title>
+        {% block title %} {% endblock title %}
+        </title>
+    </head>
+    <body>
+        <div class="header">
+            <nav class="header__row">
+                <div class="links_block">
+                    <div {% if active == "main" %} class="option_active"  {% endif %} ><a href="{% url 'main:index' %}">Главная</a></div>
+                    <div {% if active == "experts" %} class="option_active"  {% endif %} ><a href="{% url 'experts:expert_list' %}">Эксперты</a></div>
+                    <div {% if active == "expertizes" %} class="option_active"  {% endif %} ><a href="{% url 'expertizes:index' %}">Экспертизы</a></div>
+                    <div {% if active == "laboratories" %} class="option_active"  {% endif %} ><a href="{% url 'experts:labs' %}">Лаборатории</a></div>
+                    <div {% if active == "ranks" %} class="option_active"  {% endif %} ><a href="{% url 'main:ranks' %}">Звания</a></div>
+                    <div><a href="{% url 'admin:index' %}">Админка</a></div>
+                </div>
+            
+            
+                <div class="user_block">
+                    {% if user.username%}
+                     <div><a href="#"><span>{{user.first_name}} {{user.last_name}}</span></a></div>
+                        
+                        <form action="{% url 'users:logout_user' %}" method="POST">
+                            {% csrf_token %}
+                            <button class="row-button" type="submit">Выйти</button>
+                        </form>
+                    {% else%}
+                        <form action="{% url 'users:login_user' %}" method="POST">
+                            {% csrf_token %}
+                            <button class="row-button" type="submit">Войти</button>
+                        </form>
+
+                    {% endif%}
+                </div>
+            </nav>
+        </div>
+        <div class="content">
+            <div class="content__window">
+                {% block content %} {% endblock content %}
+            </div>
+        </div>
+    </body>
+</html>

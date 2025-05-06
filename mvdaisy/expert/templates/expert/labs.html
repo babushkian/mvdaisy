@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %} 
+Список лабораторий
+{% for lab in object_list %}
+  <div class="list_row row_content">
+    {# <a href="{% url 'expert:lab_edit' lab.pk %}"> #}
+        <a href="{{ lab.get_absolute_url  }}">
+      {{lab.name}}
+    </a>
+  </div>
+{% endfor %}
+{% endblock content %}

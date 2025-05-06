@@ -1,0 +1,15 @@
+﻿.idea/
+*idea
+.venv/
+node_modules/
+*.pyc
+*__pycache__
+*.sqlite3
+*.json
+tailwind.config.js
+/tasks.ods
+/notes.odt
+/add_order.js
+/tsconfig.json
+
+

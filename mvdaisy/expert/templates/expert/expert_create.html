@@ -1,0 +1,25 @@
+{% extends "base.html" %} 
+{% block content %} 
+
+<form action="" method="post">
+    {% csrf_token %}
+<div class="flex justify-start gap-1 align-middle">
+    <label for="exp_first_name" class="w-44">{{form.first_name.label}}</label>
+    <input id="exp_first_name"  class="m-2 w-40 border-2" type="text"/>
+</div>
+<div class="flex justify-start gap-1 align-middle">
+    <label for="exp_second_name" class="w-44">{{form.second_name.label}}</label>
+    <input id="exp_second_name"  class="m-2 w-40 border-2" type="text"/>
+</div>
+<div class="flex justify-start gap-1 align-middle">
+    <label for="exp_last_name" class="w-44">{{form.last_name.label}}</label>
+    <input id="exp_last_name"  class="m-2 w-40 border-2" type="text"/>
+</div>
+<div class="flex justify-start gap-1 align-middle">
+    <label for="exp_last_name" class="w-44">{{form.sex.label}}</label>
+    <input id="exp_last_name" name= class="m-2 w-40 border-2" type="text"/>
+</div>
+
+<button class="m-2 w-40 border-2">Создать<button>
+</form>
+{% endblock content %}

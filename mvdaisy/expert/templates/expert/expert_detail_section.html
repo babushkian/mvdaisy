@@ -1,0 +1,13 @@
+<div>
+    <div class="list_row section_title section_colors">{{data.title}}</div>
+    <div class="row_content row_grid_3 section_colors section_header">
+        {% for column in data.header.values %}
+            <div>{{column}}</div>
+        {% endfor %}
+    </div>
+    {% for row in data.data %}
+        <div class="row_content row_grid_3">
+            <div>{{row.name}}</div><div>{{row.start_date}}</div><div>{{row.end_date|default:"-"}}</div>
+        </div>
+    {% endfor %}
+</div>

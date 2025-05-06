@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="title">Здесь будет список экспертов</div>
+<a
+  href="{% url 'experts:expert_add' %}"
+  class="p-1 m-2 border rounded-lg border-zinc-600 bg-slate-300 hover:bg-slate-200"
+  >Добавить эксперта</a>
+
+<div class="w-[960px] my-2 mx-auto">
+  {% for item in object_list %}
+  <div class="list_row row_content">
+    {{item.first_name}} {{item.last_name}} {{item.position}} {{item.rank}}
+    {{item.rank_type}}
+
+      <div class="button_block">
+          <form action="{% url 'experts:expert' item.pk %}">
+            <button
+              class="row-button">
+              Инфо
+            </button>
+          </form>
+
+          <form action="{% url 'experts:expert_edit' item.pk %}">
+            <button
+              class="row-button">
+              Редактировать
+            </button>
+          </form>
+
+          <form action="{% url 'experts:expert_delete' item.pk %}">
+            <button
+              class="row-button">
+              Удалить
+            </button>
+          </form>
+      </div>
+  </div>
+  {% endfor %}
+  <p><a class="h-10 underline to-blue-700" href="{% url 'experts:custom_edit' %}">Редактирование отдельного эксерта</a></p>
+  <p><a class="h-10 underline to-blue-700" href="{% url 'experts:laboratory_edit' %}">Редактирование лаборатории</a></p>
+</div>
+{% endblock content %}
