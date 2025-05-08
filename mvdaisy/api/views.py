@@ -101,7 +101,7 @@ class ExpertsInLab(ListAPIView):
 class RemoveExpertFromLab(DestroyAPIView):
     serializer_class = EmptySerializer
     queryset = ExpertLaboratory.objects.all()
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_object(self):
         print(self.kwargs)
@@ -118,3 +118,13 @@ class ExpertiseAreaInLab(ListAPIView):
     def get_queryset(self):
         lab_id = self.kwargs.get('lab_id')
         return ExpertiseArea.objects.filter(laboratory__id=lab_id).distinct()
+
+
+class RemoveExpertiseAreaFromLab(DestroyAPIView):
+    serializer_class = EmptySerializer
+    queryset = ExpertiseArea.objects.all()
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_object(self):
+        return ExpertiseArea.objects.filter(pk=self.kwargs['permission_id']).first()
+

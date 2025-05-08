@@ -8,6 +8,7 @@ from .views import (CustomUserViewSet,
                     ExpertsInLab,
                     ExpertiseAreaInLab,
                     RemoveExpertFromLab,
+                    RemoveExpertiseAreaFromLab,
                     )
 
 # Routers provide an easy way of automatically determining the URL conf.
@@ -27,6 +28,8 @@ urlpatterns = [
     path('experts_lab/<int:lab_id>/expert/<int:expert_id>/delete/', RemoveExpertFromLab.as_view(),
          name='experts_lab_remove'),
     path('ex_area_lab/<int:lab_id>/', ExpertiseAreaInLab.as_view(), name='ex_area_lab'),
+    path('ex_area_lab/<int:lab_id>/permission/<int:permission_id>/delete/', RemoveExpertiseAreaFromLab.as_view(),
+         name='permission_lab_remove'),
 
 
 ]

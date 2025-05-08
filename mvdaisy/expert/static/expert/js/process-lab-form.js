@@ -2,9 +2,6 @@
 
 const csrfToken = document.cookie.split('; ').find(row => row.startsWith("csrftoken="))?.split('=')[1];
 console.log(csrfToken)
-const labId = document.querySelector('#lab-title').dataset.id
-const expertsSection = document.querySelector('#experts-section')
-const permissionsSection = document.querySelector('#permissions-section')
 
 let experts = [];
 let permissions = [];
@@ -13,43 +10,43 @@ let permissions = [];
 
 
 
-async function getExperts() {
-    const endpoint = {parent: "experts_lab", child: "expert"};
+async function getRelation(endpoint, labId, delButtonClass, section) {
     const URL = `http://127.0.0.1:8000/api/${endpoint.parent}/${labId}/`;
-    const dellButtonClass = "expert-del-button"
     const result = await fetch(URL, {
         method: 'GET',
         credentials: 'include',
     });
-    experts = await result.json();
-    console.log(experts);
-    experts.forEach(expert => {
-        expertsSection.innerHTML += `<div>${expert.pk} ${expert.name} <button class ="${dellButtonClass}" data-item-id="${expert.pk}">Удалить</button></div>`
+    const items = await result.json();
+    console.log(items);
+    items.forEach(item => {
+        section.innerHTML += `<div>${item.pk} ${item.name} <button class ="${delButtonClass}" data-item-id="${item.pk}">Удалить</button></div>`
     })
-    bindDelButtons(dellButtonClass, endpoint)
+    bindDelButtons(endpoint, labId, delButtonClass, section)
 }
 
-function bindDelButtons(buttonClass, endpoint) {
-    
-    const deleteButtons = expertsSection.querySelectorAll(`button.${buttonClass}`)
+async function deleteRelation( endpoint, labId, button){
+    const URL = `http://127.0.0.1:8000/api/${endpoint.parent}/${labId}/${endpoint.child}/${button.dataset.itemId}/delete/`;
+    const result = await fetch(URL, {
+        method: 'DELETE',
+        credentials: 'include',
+        headers: {
+            'X-CSRFToken': csrfToken,
+        },
+    });
+    if (result.status === 204) {
+        button.parentNode.remove()
+    }
+}
+
+function bindDelButtons(endpoint, labId, delButtonClass, section) {    
+    const deleteButtons = section.querySelectorAll(`button.${delButtonClass}`)
     console.log(deleteButtons)
     deleteButtons.forEach(button => {
-        button.addEventListener('click', async () => {
-            const URL = `http://127.0.0.1:8000/api/${endpoint.parent}/${labId}/${endpoint.child}/${button.dataset.itemId}/delete/`;
-            const result = await fetch(URL, {
-                method: 'DELETE',
-                credentials: 'include',
-                headers: {
-                    'X-CSRFToken': csrfToken,
-                },
-            });
-            if (result.status === 200) {
-                button.parentNode.remove()
-            }
-        })
+        button.addEventListener('click', async () => await deleteRelation(endpoint, labId, button))
     })
 
 }
+
 
 
 async function getPermissions() {
@@ -65,7 +62,12 @@ async function getPermissions() {
     })
 }
 
+const process = () => {
+    const labId = document.querySelector('#lab-title').dataset.id
+    const expertsSection = document.querySelector('#experts-section')
+    const permissionsSection = document.querySelector('#permissions-section')
 
+    getRelation({parent: "experts_lab", child: "expert"}, labId,  "expert-del-button", expertsSection);
+    getRelation({parent: "ex_area_lab", child: "permission"}, labId,  "permission-del-button", permissionsSection);}
 
-getExperts();
-getPermissions()
+document.addEventListener('DOMContentLoaded', process);
