@@ -8,6 +8,10 @@ from main.models import RankAndType
 
 Expert = get_user_model()
 
+
+class EmptySerializer(serializers.Serializer):
+    pass
+
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Expert

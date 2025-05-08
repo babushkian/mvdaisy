@@ -2,14 +2,15 @@ from rest_framework import routers, serializers, viewsets, permissions
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.generics import GenericAPIView, ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import (GenericAPIView, ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView,
+                                     DestroyAPIView)
 from rest_framework.renderers import JSONRenderer
 
 from django.db.models import Prefetch, Min, Subquery
 
 # ViewSets define the view behavior.
 from .serializers import (UserSerializer, ExpertSerializer, RankSerializer, RankTypeSerializer, ExpertsInLabSerializer,
-                          ExpertiseAreaInLabSerializer)
+                          ExpertiseAreaInLabSerializer, EmptySerializer)
 from users.models import Expert
 from expert.models import ExpertiseArea, ExpertExpertiseArea, Laboratory, ExpertLaboratory
 from main.models import RankAndType
@@ -95,6 +96,18 @@ class ExpertsInLab(ListAPIView):
     def get_queryset(self):
         lab_id = self.kwargs.get('lab_id')
         return Expert.objects.filter(laboratories__id=lab_id).distinct()
+
+
+class RemoveExpertFromLab(DestroyAPIView):
+    serializer_class = EmptySerializer
+    queryset = ExpertLaboratory.objects.all()
+    permission_classes = [permissions.AllowAny]
+
+    def get_object(self):
+        print(self.kwargs)
+        return ExpertLaboratory.objects.filter(laboratory=self.kwargs['lab_id'], expert=self.kwargs['expert_id']).first()
+
+
 
 
 class ExpertiseAreaInLab(ListAPIView):

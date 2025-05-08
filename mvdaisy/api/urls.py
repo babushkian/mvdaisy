@@ -6,7 +6,9 @@ from .views import (CustomUserViewSet,
                     RankListView,
                     RankTypeListView,
                     ExpertsInLab,
-                    ExpertiseAreaInLab)
+                    ExpertiseAreaInLab,
+                    RemoveExpertFromLab,
+                    )
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
@@ -22,6 +24,9 @@ urlpatterns = [
     path('ranks/<int:type_id>/', RankListView.as_view(), name='ranks'),
     path('ranktypes/<int:rank_id>/', RankTypeListView.as_view(), name='ranktypes'),
     path('experts_lab/<int:lab_id>/',ExpertsInLab.as_view(), name='experts_lab'),
+    path('experts_lab/<int:lab_id>/expert/<int:expert_id>/delete/', RemoveExpertFromLab.as_view(),
+         name='experts_lab_remove'),
     path('ex_area_lab/<int:lab_id>/', ExpertiseAreaInLab.as_view(), name='ex_area_lab'),
+
 
 ]

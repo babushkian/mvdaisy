@@ -49,3 +49,4 @@ class ExpertLaboratory(models.Model):
 	laboratory = models.ForeignKey(Laboratory, on_delete=models.CASCADE, related_name="expert_laboratory")
 	start_date = models.DateField(null=True, blank=True, verbose_name="Начало работы в лаборатории")
 	end_date = models.DateField(null=True, blank=True,  verbose_name="Конец работы в лаюоратории")
+
