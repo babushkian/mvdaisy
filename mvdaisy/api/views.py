@@ -89,7 +89,7 @@ class RankTypeListView(GenericAPIView):
 
 class ExpertsInLab(ListAPIView):
     authentication_classes = [TokenAuthentication, SessionAuthentication]
-    permission_classes = [permissions.AllowAny ]
+    permission_classes = [permissions.IsAuthenticated ]
     serializer_class = ExpertsInLabSerializer
 
     def get_queryset(self):
@@ -99,7 +99,7 @@ class ExpertsInLab(ListAPIView):
 
 class ExpertiseAreaInLab(ListAPIView):
     authentication_classes = [TokenAuthentication, SessionAuthentication]
-    permission_classes = [permissions.AllowAny ]
+    permission_classes = [permissions.IsAuthenticated ]
     serializer_class = ExpertiseAreaInLabSerializer
 
     def get_queryset(self):

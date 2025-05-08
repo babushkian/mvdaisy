@@ -31,7 +31,7 @@ urlpatterns = [
 
     path('', include("main.urls", namespace="main")),
     path('experts/', include("expert.urls", namespace="experts")),
-    path('users/', include("users.urls", namespace="users")),
+    path('', include("users.urls", namespace="users")),
     path('exps/', include("expertizes.urls", namespace="expertizes")),
 
     path('api/', include("api.urls")),

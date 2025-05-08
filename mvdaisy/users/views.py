@@ -9,7 +9,7 @@ class LoginUser(LoginView):
     template_name = "users/login.html"
 
     def get_success_url(self):
-        return reverse_lazy("expert_list")
+        return reverse_lazy("experts:expert_list")
 
 
 class LogoutUser(LogoutView):

@@ -1,15 +1,25 @@
 {% extends "base.html" %}
+{% load static %}
 {% block content %} 
 <h2>Детали лаборатории</h2>
-<span style="margin-top:20px;">Лаборатория: {{object.name}}</span>
-
- {% for expert in object.experts.all %}
-<div>{{ expert.last_name }} {{ expert.first_name }}</div>
-{%endfor%}
+<span id="lab-title" style="margin-top:20px;" data-id="{{object.id}}">Лаборатория: {{object.name}}</span>
 -----------
-
- {% for area in object.expertiseareas.all %}
-<div>{{ area.name }}</div>
+{% comment %}
+{% for expert in object.experts.all %}
+    <div>{{ expert.last_name }} {{ expert.first_name }}</div>
 {%endfor%}
 
+{% for area in object.expertiseareas.all %}
+    <div>{{ area.name }}</div>
+{%endfor%} {% endcomment %}
+
+<div id ="experts-section" ></div>
+-----------
+<div id ="permissions-section" ></div>
 {% endblock content %}
+{% block scripts %}
+    {{block.super }}
+    <script type="module" src="{% static 'expert/js/process-lab-form.js' %}"></script>
+{% endblock scripts %}
+
+
