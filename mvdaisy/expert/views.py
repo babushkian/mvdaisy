@@ -51,7 +51,7 @@ class EditExpertView(UpdateView):
 
 class ExpertView(DetailView):
     model = Expert
-    template_name = "expert/expert_datail.html"
+    template_name = "expert/expert_detail/index.html"
 
 
     def get_object(self, queryset=None):

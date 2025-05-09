@@ -9,6 +9,8 @@ from .views import (CustomUserViewSet,
                     ExpertiseAreaInLab,
                     RemoveExpertFromLab,
                     RemoveExpertiseAreaFromLab,
+                    ExpertsNotAssignedToLab,
+                    AddExpertToLab,
                     )
 
 # Routers provide an easy way of automatically determining the URL conf.
@@ -25,11 +27,18 @@ urlpatterns = [
     path('ranks/<int:type_id>/', RankListView.as_view(), name='ranks'),
     path('ranktypes/<int:rank_id>/', RankTypeListView.as_view(), name='ranktypes'),
     path('experts_lab/<int:lab_id>/',ExpertsInLab.as_view(), name='experts_lab'),
+    path('experts_not_assigned/<int:lab_id>/',ExpertsNotAssignedToLab.as_view(), name='experts_not_assigned'),
     path('experts_lab/<int:lab_id>/expert/<int:expert_id>/delete/', RemoveExpertFromLab.as_view(),
          name='experts_lab_remove'),
+    path('experts_lab/expert/create/', AddExpertToLab.as_view(),
+         name='experts_lab_create'),
+
+
+
     path('ex_area_lab/<int:lab_id>/', ExpertiseAreaInLab.as_view(), name='ex_area_lab'),
     path('ex_area_lab/<int:lab_id>/permission/<int:permission_id>/delete/', RemoveExpertiseAreaFromLab.as_view(),
          name='permission_lab_remove'),
+
 
 
 ]

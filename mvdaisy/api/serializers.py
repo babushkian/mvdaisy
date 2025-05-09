@@ -31,6 +31,12 @@ class ExpertLaboratorySerializer(serializers.ModelSerializer):
         fields = ("laboratory", "start_date", "end_date")
 
 
+class ExpertLaboratoryModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ExpertLaboratory
+        fields = ("expert", "laboratory", "start_date", "end_date")
+
+
 
 class ExpertSerializer(serializers.ModelSerializer):
 

@@ -123,7 +123,7 @@ class Command(BaseCommand):
 
 
         User = get_user_model()
-        User.objects.create_superuser('admin', 'admin@myproject.com', '1234', last_name="admin")
+        User.objects.create_superuser('admin', 'admin@myproject.com', '1234', last_name="admin", working=False)
         for user in users_list:
             User.objects.create_user(**user)
 

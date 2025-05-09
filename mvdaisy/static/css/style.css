@@ -314,3 +314,44 @@ table td {
   width: 100%;
   min-height: 2.5rem;
 }
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+}
+
+.modal-content {
+  background-color: var(--content_background);
+  border: 2px solid  var(--table_header_background);
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  width: 800px; 
+  min-height: 480px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.modal-footer {
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  margin-top: 1rem;
+  gap: 1rem;
+}
+
+

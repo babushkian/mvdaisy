@@ -1,16 +1,18 @@
+import datetime
+
 from rest_framework import routers, serializers, viewsets, permissions
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.generics import (GenericAPIView, ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView,
-                                     DestroyAPIView)
+                                     DestroyAPIView, CreateAPIView)
 from rest_framework.renderers import JSONRenderer
-
+from rest_framework import status
 from django.db.models import Prefetch, Min, Subquery
 
 # ViewSets define the view behavior.
 from .serializers import (UserSerializer, ExpertSerializer, RankSerializer, RankTypeSerializer, ExpertsInLabSerializer,
-                          ExpertiseAreaInLabSerializer, EmptySerializer)
+                          ExpertiseAreaInLabSerializer, EmptySerializer, ExpertLaboratoryModelSerializer)
 from users.models import Expert
 from expert.models import ExpertiseArea, ExpertExpertiseArea, Laboratory, ExpertLaboratory
 from main.models import RankAndType
@@ -48,6 +50,7 @@ class ExpertsView(ListCreateAPIView):
     lab_rel = Prefetch("expert_laboratory", queryset=ExpertLaboratory.objects.select_related("laboratory"))
     queryset = queryset.prefetch_related(perm_rel, lab_rel)
 
+
 class ExpertRetriveView(RetrieveUpdateDestroyAPIView):
     authentication_classes = [TokenAuthentication, SessionAuthentication]
     permission_classes = [permissions.IsAuthenticated ]
@@ -56,6 +59,7 @@ class ExpertRetriveView(RetrieveUpdateDestroyAPIView):
     perm_rel = Prefetch("expert_expertisearea", queryset= ExpertExpertiseArea.objects.select_related("expertisearea"))
     lab_rel = Prefetch("expert_laboratory", queryset=ExpertLaboratory.objects.select_related("laboratory"))
     queryset = queryset.prefetch_related(perm_rel, lab_rel)
+
 
 class RankListView(GenericAPIView):
     queryset = RankAndType.objects.select_related("rank")
@@ -70,6 +74,7 @@ class RankListView(GenericAPIView):
             object_list = self.queryset.filter(pk__in=Subquery(selected_ids)).order_by("rank")
         serializer = self.get_serializer(instance=object_list, many=True)
         return Response(serializer.data)
+
 
 class RankTypeListView(GenericAPIView):
     queryset = RankAndType.objects.select_related("type")
@@ -88,6 +93,7 @@ class RankTypeListView(GenericAPIView):
         serializer = self.get_serializer(instance=object_list, many=True)
         return Response(serializer.data)
 
+
 class ExpertsInLab(ListAPIView):
     authentication_classes = [TokenAuthentication, SessionAuthentication]
     permission_classes = [permissions.IsAuthenticated ]
@@ -95,7 +101,7 @@ class ExpertsInLab(ListAPIView):
 
     def get_queryset(self):
         lab_id = self.kwargs.get('lab_id')
-        return Expert.objects.filter(laboratories__id=lab_id).distinct()
+        return Expert.objects.filter(laboratories__id=lab_id).distinct().order_by("last_name")
 
 
 class RemoveExpertFromLab(DestroyAPIView):
@@ -107,6 +113,34 @@ class RemoveExpertFromLab(DestroyAPIView):
         print(self.kwargs)
         return ExpertLaboratory.objects.filter(laboratory=self.kwargs['lab_id'], expert=self.kwargs['expert_id']).first()
 
+
+class AddExpertToLab(CreateAPIView):
+    serializer_class = ExpertLaboratoryModelSerializer
+    queryset = ExpertLaboratory.objects.all()
+    permission_classes = [permissions.IsAuthenticated]
+
+    def create(self, request, *args, **kwargs):
+        data = dict(request.data)
+        data["start_date"] = datetime.date.today()
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+
+
+class ExpertsNotAssignedToLab(ListAPIView):
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
+    permission_classes = [permissions.IsAuthenticated ]
+    serializer_class = ExpertsInLabSerializer
+
+    def get_queryset(self):
+        lab_id = self.kwargs.get('lab_id')
+        return (Expert.objects
+                .exclude(laboratories__id=lab_id)
+                .filter(working=True)
+                .order_by("last_name"))
 
 
 

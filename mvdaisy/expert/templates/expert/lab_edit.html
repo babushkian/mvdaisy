@@ -1,8 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %} 
-<h2>Детали лаборатории</h2>
-<span id="lab-title" style="margin-top:20px;" data-id="{{object.id}}">Лаборатория: {{object.name}}</span>
+<div  class="list_row section_title section_colors" id="lab-title" data-id="{{object.id}}">Лаборатория: {{object.name}}</div>
 -----------
 {% comment %}
 {% for expert in object.experts.all %}
@@ -14,8 +13,44 @@
 {%endfor%} {% endcomment %}
 
 <div id ="experts-section" ></div>
+<div><button class ="row-button" style="margin: 10px 0; width: 200px" id="add-expert-button">Добавить эксперта</button></div>
 -----------
 <div id ="permissions-section" ></div>
+<div><button  class ="row-button" style="margin: 10px 0; width: 200px" id="add-permission-button">Добавить допуск</button></div>
+
+{#==============================#}
+<div id="id-modal-expert" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Выберете эксперта</h2>
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+            <button class="row-button" id="confirm-expert-button">Подтвердить</button>
+        </div>
+    </div>
+</div>
+
+
+{#==============================#}
+<div id="id-modal-permission" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Выберете допуск</h2>
+        </div>
+        <div class="modal-body">
+            <p>Some text in the Modal Body</p>
+            <p>Some other text...</p>
+            <p>Больше допусков</p>
+            <p>Еще больше допусков</p>
+        </div>
+        <div class="modal-footer">
+            <button class="row-button" id="confirm-permission-button">Подтвердить</button>
+        </div>
+    </div>
+</div>
+
 {% endblock content %}
 {% block scripts %}
     {{block.super }}
